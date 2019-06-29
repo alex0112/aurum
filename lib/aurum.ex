@@ -1,18 +1,17 @@
 defmodule Aurum do
+
+  @enforce_keys [:symbol, :client]
+  defstruct symbol: nil, client: nil
+  
   @moduledoc """
   Documentation for Aurum.
   """
 
   @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> Aurum.hello()
-      :world
-
+  define a new Aurum
   """
-  def hello do
-    :world
+  def new(symbol: symbol, client: client) do
+    unless symbol && client, do: raise ArgumentError
+    %Aurum{symbol: symbol, client: client}
   end
 end

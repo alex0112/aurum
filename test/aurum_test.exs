@@ -1,23 +1,18 @@
 defmodule AurumTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
   doctest Aurum
-
-  setup_all do
-    ##[ client: Client.new(ENV['COINBASE_KEY'], ENV['COINBASE_SECRET']) ] ## TODO: Implement
-    [ client: nil ]
-  end
   
   describe "new" do
-    test "raises an error without symbol", context do
-      assert_raise ArgumentError, Aurum.new(context[:client])
+    test "raises an error without a symbol" do
+      assert_raise ArgumentError, Aurum.new(symbol: nil, client: "")
     end
 
     test "raises an error without a client" do
-      assert_raise ArgumentError, Aurum.new(:BTC)
+      assert_raise ArgumentError, Aurum.new(symbol: "", client: nil)
     end
 
-    test "does not raise an error when provided with a client and symbol", context do
-      assert Aurum.new(context[:client], :BTC)
+    test "does not raise an error when provided with a client and symbol" do
+      assert Aurum.new(symbol: "", client: "")
     end
   end
 end
