@@ -1,6 +1,6 @@
 # Aurum
 
-**TODO: Add description**
+Calculate cryptocurrency gains and losses
 
 ## Installation
 
