@@ -35,6 +35,12 @@ defmodule Request do
         HTTPotion.get base_url <> request.path, payload
       :POST ->
         HTTPotion.post base_url <> request.path, payload
+      :PUT ->
+        HTTPotion.put base_url <> request.path, payload
+      :PATCH ->
+        HTTPotion.patch base_url <> request.path, payload
+      :DELETE ->
+        HTTPotion.delete base_url <> request.path, payload
       _ ->
         raise "Method not yet implemented"
     end
