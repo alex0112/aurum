@@ -24,7 +24,7 @@ defmodule Request do
 
   def sign!(request) do
     pre_hash = Integer.to_string(request.timestamp) <> Atom.to_string(request.method) <> request.path <> request.body
-    signature = :crypto.hmac(:sha256, request.secret, pre_hash) |> Base.encode64 #|> String.downcase
+    signature = :crypto.hmac(:sha256, request.secret, pre_hash) |> Base.encode64
     %Request{ method: request.method, path: request.path, key: request.key, secret: request.secret, timestamp: request.timestamp, signature: signature }
   end
   
