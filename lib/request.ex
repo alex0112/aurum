@@ -44,9 +44,9 @@ defmodule Request do
   end
   
   def send!(request) do
-    tls_base = "https://"
     payload = [
       body: request.body,
+      follow_redirects: true,
       headers:
       [
         "CB-ACCESS-KEY": request.key,
