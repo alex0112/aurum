@@ -1,6 +1,6 @@
 # Aurum
 
-Wrapper for the coinbase-api
+Wrapper for the coinbase API
 
 ## Installation
 
