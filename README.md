@@ -1,6 +1,6 @@
 # Aurum
 
-Calculate cryptocurrency gains and losses
+Wrapper for the coinbase-api
 
 ## Installation
 
