@@ -19,10 +19,10 @@ defmodule Request do
         signature: nil,
     }
 
-    Request.sign!(request)
+    Request.sign(request)
   end
 
-  def sign!(request) do
+  def sign(request) do
     pre_hash =
       Integer.to_string(request.timestamp) <>
       Atom.to_string(request.method) <>
