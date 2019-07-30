@@ -7,14 +7,14 @@ defmodule Request do
   def new(method, path, body, key, secret, server_time) do
     if !(Enum.member? [:GET, :POST, :PUT, :PATCH, :DELETE], method), do: raise ArgumentError, message: "Unrecognized HTTP method #{method}"
 
-    base_url      = "api.coinbase.com/v2"
-    full_path     = base_url <> path
+    base_url      = "https://api.coinbase.com"
+    full_path     = path
     request       = %Request{
-        method: method,
-        path: full_path,
-        body: body,
-        key: key,
-        secret: secret,
+        method:    method,
+        path:      full_path,
+        body:      body,
+        key:       key,
+        secret:    secret,
         timestamp: server_time,
         signature: nil,
     }
@@ -34,10 +34,10 @@ defmodule Request do
       Base.encode64
 
     %Request{
-      method: request.method,
-      path: request.path,
-      key: request.key,
-      secret: request.secret,
+      method:    request.method,
+      path:      request.path,
+      key:       request.key,
+      secret:    request.secret,
       timestamp: request.timestamp,
       signature: signature
     }
@@ -45,7 +45,7 @@ defmodule Request do
   
   def send!(request) do
     payload = [
-      body: request.body,
+      body:             request.body,
       follow_redirects: true,
       headers:
       [
@@ -55,9 +55,10 @@ defmodule Request do
         "Content-Type": "application/json",
       ]
     ]
+    base_url      = "api.coinbase.com"
     case request.method do
       :GET ->
-        HTTPotion.get request.path, payload
+        HTTPotion.get base_url <> request.path, payload
       :POST ->
         HTTPotion.post request.path, payload
       :PUT ->
