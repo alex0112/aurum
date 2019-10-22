@@ -21,7 +21,8 @@ defmodule Aurum.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:httpotion, "~> 3.1.2"},
+      {:httpotion, path: "/Users/alex/prog/httpotion"},
+      #      {:httpotion, "~> 3.1.2"},
       {:poison, "~> 4.0.1"}
     ]
   end

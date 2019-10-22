@@ -1,0 +1,49 @@
+# base = "http://api.coinbase.com"
+# path = "/v2/accounts"
+
+# base = "http://api.coinbase.com"
+# path = "/v2/accounts/"
+
+# base = "http://api.coinbase.com"
+# path = "/v2/accounts"
+
+# base = "http://api.coinbase.com"
+# path = "/v2/accounts/"
+
+# base = "http://api.coinbase.com/"
+# path = "v2/accounts"
+
+# base = "http://api.coinbase.com/"
+# path = "v2/accounts/"
+ 
+# base = "http://api.coinbase.com/"
+# path = "v2/accounts"
+
+# base = "http://api.coinbase.com/"
+# path = "v2/accounts/"
+
+# base = "https://api.coinbase.com"
+# path = "/v2/accounts"
+
+# base = "https://api.coinbase.com"
+# path = "/v2/accounts/"
+
+# base = "https://api.coinbase.com"
+# path = "/v2/account"
+
+# base = "https://api.coinbase.com"
+# path = "/v2/accounts/"
+
+# base = "https://api.coinbase.com/"
+# path = "v2/accounts"
+
+# base = "https://api.coinbase.com/"
+# path = "v2/accounts/"
+
+#base = "https://api.coinbase.com/"
+#path = "v2/accounts"
+
+#base = "https://api.coinbase.com/"
+#path = "v2/accounts/"
+
+
