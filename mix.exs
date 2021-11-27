@@ -5,7 +5,7 @@ defmodule Aurum.MixProject do
     [
       app: :aurum,
       version: "0.1.0",
-      elixir: "~> 1.7",
+      elixir: "~> 1.12",
       start_permanent: Mix.env() == :prod,
       deps: deps()
     ]
@@ -21,9 +21,13 @@ defmodule Aurum.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:httpotion, path: "/Users/alex/prog/httpotion"},
-      #      {:httpotion, "~> 3.1.2"},
-      {:poison, "~> 4.0.1"}
+    {:tesla, "~> 1.4"},
+
+    # optional, but recommended adapter
+    {:hackney, "~> 1.17"},
+
+    # optional, required by JSON middleware
+    {:jason, ">= 1.0.0"}
     ]
   end
 end

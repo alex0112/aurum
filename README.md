@@ -1,7 +1,21 @@
 # Aurum
 
-**Under Construction** 🤗
+**TODO: Add description**
 
-Eventually, this may be a wrapper for the coinbase API written in Elixir.  Though this repository was made with the eventual goal of providing a comprehensive interface, it's currently more of a fun project to practice things such as HMAC authentication without any hand holding from other libraries.  Presently the interesting bits of this project reside in [`lib/request.ex`](https://github.com/alex0112/aurum/blob/master/lib/request.ex).
+## Installation
 
-Feel free to poke around.
+If [available in Hex](https://hex.pm/docs/publish), the package can be installed
+by adding `aurum` to your list of dependencies in `mix.exs`:
+
+```elixir
+def deps do
+  [
+    {:aurum, "~> 0.1.0"}
+  ]
+end
+```
+
+Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
+and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
+be found at [https://hexdocs.pm/aurum](https://hexdocs.pm/ex_coin).
+
