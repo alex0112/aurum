@@ -14,11 +14,11 @@ defmodule Aurum.Coinbase.Client do
     Tesla.client(middleware)
   end
 
-  def middleware(method, path, body, base_url \\ @base_url) do
+  def middleware(method, path, body, base_url \\ @base_url, header_fun \\ &headers/6) do
     [
       {Tesla.Middleware.BaseUrl, base_url},
       Tesla.Middleware.JSON,
-      {Tesla.Middleware.Headers, headers(method, path, body)}
+      {Tesla.Middleware.Headers, header_fun.(method, path, body)}
     ]
   end
 
@@ -26,7 +26,7 @@ defmodule Aurum.Coinbase.Client do
   Provide a list of headers to be used in the Coinbase request. 
   """
   @spec headers(method :: String.t(), path :: String.t(), body :: String.t(), key :: String.t(), sign_fun :: (String.t(), String.t(), String.t()-> String.t()),timestamp :: String.t()) :: list(tuple())
-  def headers(method, path, body, key_fun \\ Fetchers.fetch_key/0, sign_fun \\ Sign.sign, timestamp_fun \\ Fetchers.fetch) do
+  def headers(method, path, body, key_fun \\ &Fetchers.fetch_key/0, sign_fun \\ &Sign.sign/5, timestamp_fun \\ &Fetchers.fetch_timestamp/0) do
     timestamp = timestamp_fun.()
 
     [
