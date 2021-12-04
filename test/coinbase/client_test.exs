@@ -18,7 +18,14 @@ defmodule Aurum.Coinbase.ClientTest do
       assert ({Tesla.Middleware.BaseUrl, base_url} in middleware_list)
     end
 
-  end
+    test "correctly inserts the headers" do
+      base_url        = "https://api.example.com/v2"
+      headers_fun     = fn _method, _path, _body -> "<headers>" end
+      middleware_list = Client.middleware("", "", "", base_url, headers_fun)
+
+      assert {Tesla.Middleware.Headers, "<headers>"} in middleware_list
+    end
+end
 
   describe "headers/6" do
     
@@ -37,7 +44,6 @@ defmodule Aurum.Coinbase.ClientTest do
 	  {"CB-ACCESS-TIMESTAMP", timestamp_fun.()}
 	]
     end
-
   end
 
 end
