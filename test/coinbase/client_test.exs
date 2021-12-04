@@ -6,6 +6,12 @@ defmodule Aurum.Coinbase.ClientTest do
   alias Tesla
 
   describe "new/6" do
+    test "generates a new client with the correct middleware" do
+      middleware_fun = fn _method, _path, _body -> [{:middleware, :here}] end
+      client         = Client.new("method", "/path", "body", middleware_fun)
+
+      assert client.pre == [{:middleware, :call, [:here]}] ## {ModuleName, :call, [:options]} is how Tesla represents this
+    end
   end
 
   describe "middleware/5" do
@@ -23,7 +29,7 @@ defmodule Aurum.Coinbase.ClientTest do
       headers_fun     = fn _method, _path, _body -> "<headers>" end
       middleware_list = Client.middleware("", "", "", base_url, headers_fun)
 
-      assert {Tesla.Middleware.Headers, "<headers>"} in middleware_list
+      assert {Tesla.Middleware.Headers, headers_fun.(nil, nil, nil)} in middleware_list
     end
 end
 
