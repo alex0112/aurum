@@ -4,6 +4,8 @@ defmodule Aurum.Coinbase.Sign do
   to the Coinbase API.
   """
 
+  alias Aurum.Coinbase.Fetchers, as: Fetchers
+
   @doc """
   secret    bar
   timestamp 1636971273
@@ -15,17 +17,13 @@ defmodule Aurum.Coinbase.Sign do
   hash:   6aed30a898d9c87ef9f652d81e49464c65ff9406801e7edd238febe959f58dca
   """
   @spec sign(secret :: String.t(), timestamp :: integer(), method :: String.t(), path :: String.t(), body :: String.t()) :: String.t()
-  def sign(secret, timestamp, method, path, body \\ "") do
+  def sign(method, path, body \\ "", timestamp, secret_fun \\ &Fetchers.fetch_secret/0) do
     message    = generate_message(timestamp, method, path, body)
-    secret     = secret |> encode_secret()
+    secret     = secret_fun.()
 
     _signature =
       :crypto.mac(:hmac, :sha256, secret, message)
       |> Base.encode16(case: :lower)
-  end
-
-  def encode_secret(secret) do
-    secret
   end
 
   def generate_message(timestamp, method, path, body \\ "") do

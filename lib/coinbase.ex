@@ -1,59 +1,37 @@
 defmodule Aurum.Coinbase do
 
+  @moduledoc """
+  This module provides abstractions around basic HTTP methods within the context of the coinbase ecosystem. It's loosley 
+  """
+  alias Aurum.Coinbase.Client, as: Client
   alias Tesla
-  alias Aurum.Coinbase.Fetchers
-  alias Aurum.Coinbase.Sign
 
-  @spec client(path :: String.t(), method :: String.t(), key_fun :: (-> String.t()), secret_fun :: (-> String.t()), sign_fun :: (... -> String.t()), timestamp_fun :: (-> String.t())) :: %Tesla.Client{}
-  def client(path, method, key_fun \\ &Fetchers.fetch_key/0, secret_fun \\ &Fetchers.fetch_secret/0, sign_fun \\ &Sign.sign/5, timestamp_fun \\ &Fetchers.fetch_timestamp/0) do
-    timestamp = timestamp_fun.()
-    key       = key_fun.()
-    secret    = secret_fun.()
-
-    middleware = [
-      {Tesla.Middleware.BaseUrl, "https://api.coinbase.com"},
-      Tesla.Middleware.JSON,
-      {Tesla.Middleware.Headers,
-       [
-	 {"CB-ACCESS-KEY", key},
-	 {"CB-ACCESS-SIGN", sign_fun.(secret, timestamp, method, path, "")},
-	 {"CB-ACCESS-TIMESTAMP", timestamp}
-       ]
-      }
-    ]
-
-    Tesla.client(middleware)
-  end
-  
-  def current_user do
-    {:ok, data} =
-      client("/v2/user", "GET")
-      |> Tesla.get("/v2/user")
-
-    data
+  @spec get(path :: String.t(), client_module :: module()) :: map()
+  def get(path, client_module \\ Tesla) do
+    Client.new(path, "GET")
+    |> client_module.get(path)
+    |> Client.unwrap_response()
   end
 
-  def accounts do
-    {:ok, resp} =
-      client("/v2/accounts", "GET")
-      |> Tesla.get("/v2/accounts")
-
-    resp.body["data"]
+  @spec post(path :: String.t(), body :: String.t(), client_module :: module()) :: map()
+  def post(path, body, client_module \\ Tesla) do
+    Client.new(path, "POST", body)
+    |> client_module.post(path, body)
+    |> Client.unwrap_response()
   end
 
-  def account_by_symbol(symbol) do
-    accounts()
-    |> Enum.filter(fn account ->
-      account["currency"]["code"] == symbol
-    end)
+  @spec put(path :: String.t(), body :: String.t(), client_module :: module()) :: map()
+  def put(path, body, client_module \\ Tesla) do
+    Client.new(path, "POST", body)
+    |> client_module.put(path, body)
+    |> Client.unwrap_response()
   end
 
-  def account_id(account) do
-    account["id"]
-  end
-
-  def resource_path(account) do
-    account["resource_path"]
+  @spec delete(path :: String.t(), client_module :: module()) :: map()
+  def delete(path, client_module \\ Tesla) do
+    Client.new(path, "DELETE")
+    |> client_module.delete(path)
+    |> Client.unwrap_response()
   end
 
 end

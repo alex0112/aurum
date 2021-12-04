@@ -1,4 +1,9 @@
-defmodule AurumTest do
+defmodule CoinbaseTest do
   use ExUnit.Case
-  doctest Aurum
+  alias Tesla
+  doctest Aurum.Coinbase
+
+  describe "get/2" do
+  end
+
 end
