@@ -6,32 +6,24 @@ defmodule Aurum.Coinbase do
   alias Aurum.Coinbase.Client, as: Client
   alias Tesla
 
-  @spec get(path :: String.t(), client_module :: module()) :: map()
-  def get(path, client_module \\ Tesla) do
-    Client.new(path, "GET")
-    |> client_module.get(path)
-    |> Client.unwrap_response()
+  def get(path) do
+    Client.get(path)
   end
 
-  @spec post(path :: String.t(), body :: String.t(), client_module :: module()) :: map()
-  def post(path, body, client_module \\ Tesla) do
-    Client.new(path, "POST", body)
-    |> client_module.post(path, body)
-    |> Client.unwrap_response()
+  def post(path, body) do
+    Client.post(path, body)
   end
 
-  @spec put(path :: String.t(), body :: String.t(), client_module :: module()) :: map()
-  def put(path, body, client_module \\ Tesla) do
-    Client.new(path, "POST", body)
-    |> client_module.put(path, body)
-    |> Client.unwrap_response()
+  def put(path, body) do
+    Client.put(path, body)
   end
 
-  @spec delete(path :: String.t(), client_module :: module()) :: map()
-  def delete(path, client_module \\ Tesla) do
-    Client.new(path, "DELETE")
-    |> client_module.delete(path)
-    |> Client.unwrap_response()
+  def patch(path, body) do
+    Client.patch(path, body)
+  end
+
+  def delete(path) do
+    Client.delete(path)
   end
 
 end

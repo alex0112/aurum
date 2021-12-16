@@ -14,7 +14,7 @@ defmodule Aurum.Coinbase.Client do
     Tesla.client(middleware)
   end
 
-  def middleware(method, path, body, base_url \\ @base_url, header_fun \\ &headers/6) do
+  def middleware(method, path, body, base_url \\ @base_url, header_fun \\ &headers/3) do
     [
       {Tesla.Middleware.BaseUrl, base_url},
       Tesla.Middleware.JSON,
@@ -26,29 +26,55 @@ defmodule Aurum.Coinbase.Client do
   Provide a list of headers to be used in the Coinbase request. 
   """
   @spec headers(method :: String.t(), path :: String.t(), body :: String.t(), key :: String.t(), sign_fun :: (String.t(), String.t(), String.t()-> String.t()),timestamp :: String.t()) :: list(tuple())
-  def headers(method, path, body, key_fun \\ &Fetchers.fetch_key/0, sign_fun \\ &Sign.sign/5, timestamp_fun \\ &Fetchers.fetch_timestamp/0) do
+  def headers(method, path, body, key_fun \\ &Fetchers.fetch_key/0, sign_fun \\ &Sign.sign/4, timestamp_fun \\ &Fetchers.fetch_timestamp/0) do
     timestamp = timestamp_fun.()
 
     [
       {"CB-ACCESS-KEY", key_fun.()},
       {"CB-ACCESS-SIGN", sign_fun.(method, path, body, timestamp)},
-      {"CB-ACCESS-TIMESTAMP", timestamp_fun.()}
+      {"CB-ACCESS-TIMESTAMP", timestamp}
     ]
   end
 
-  @spec unwrap_response(resp :: {atom(), any()}) :: map() | {atom(), any()}
   def unwrap_response(resp) do
     case resp do
       {:ok, resp}
-	-> resp |> fetch_body()
-      {:error, error}
-	-> Logger.debug(error)
-	   {:error, error}
+	-> {:ok, resp.body}
+      {:error, message}
+	-> {:error, message}
+      err
+	-> {:error, err}
     end
   end
 
-  defp fetch_body(resp) do
-    resp
+  def get(path) do
+    new("GET", path)
+    |> Tesla.get(path)
+    |> unwrap_response()
+  end
+
+  def delete(path) do
+    new("DELETE", path)
+    |> Tesla.delete(path)
+    |> unwrap_response()
+  end
+
+  def post(path, body) do
+    new("POST", path, body)
+    |> Tesla.post(path, body)
+    |> unwrap_response()
+  end
+
+  def put(path, body) do
+    new("PUT", path, body)
+    |> Tesla.put(path, body)
+    |> unwrap_response()
+  end
+
+  def patch(path, body) do
+    new("PATCH", path, body)
+    |> Tesla.patch(path, body)
+    |> unwrap_response()
   end
 
 end

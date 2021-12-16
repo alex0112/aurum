@@ -52,4 +52,25 @@ end
     end
   end
 
+  describe "unwrap_response/1" do
+    
+    test "unwraps a successful response and returns the body" do
+      success = {:ok, %{body: "<body>"}}
+
+      assert Client.unwrap_response(success) == {:ok, "<body>"}
+    end
+
+    test "unwraps an unsuccessful response" do
+      failure = {:error, "<error message>"}
+      
+      assert Client.unwrap_response(failure) == {:error, "<error message>"}
+    end
+
+    test "correctly handles an unknown error" do
+      unknown = :nope
+      
+      assert Client.unwrap_response(unknown) == {:error, :nope}
+    end
+  end
+
 end
