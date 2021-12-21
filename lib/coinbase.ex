@@ -35,7 +35,6 @@ defmodule Aurum.Coinbase do
     Client.post(path, body)
   end
 
-
   @doc """
   Perform a signed put request to the specified path. Due to some of the implementation details the path string must begin with `/v2` in order to correctly call the API.
 
