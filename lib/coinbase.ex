@@ -1,59 +1,87 @@
 defmodule Aurum.Coinbase do
 
-  alias Tesla
-  alias Aurum.Coinbase.Fetchers
-  alias Aurum.Coinbase.Sign
+  @moduledoc """
+  This module provides abstractions around basic HTTP methods within the context of the coinbase ecosystem. It takes care of using your Coinbase API Key/Secret to generate the required HMAC authentication signature based on the current timestamp so that the consumer of this module can focus on application logic.
+  """
 
-  @spec client(path :: String.t(), method :: String.t(), key_fun :: (-> String.t()), secret_fun :: (-> String.t()), sign_fun :: (... -> String.t()), timestamp_fun :: (-> String.t())) :: %Tesla.Client{}
-  def client(path, method, key_fun \\ &Fetchers.fetch_key/0, secret_fun \\ &Fetchers.fetch_secret/0, sign_fun \\ &Sign.sign/5, timestamp_fun \\ &Fetchers.fetch_timestamp/0) do
-    timestamp = timestamp_fun.()
-    key       = key_fun.()
-    secret    = secret_fun.()
+  alias Aurum.Coinbase.Client, as: Client
 
-    middleware = [
-      {Tesla.Middleware.BaseUrl, "https://api.coinbase.com"},
-      Tesla.Middleware.JSON,
-      {Tesla.Middleware.Headers,
-       [
-	 {"CB-ACCESS-KEY", key},
-	 {"CB-ACCESS-SIGN", sign_fun.(secret, timestamp, method, path, "")},
-	 {"CB-ACCESS-TIMESTAMP", timestamp}
-       ]
-      }
-    ]
-
-    Tesla.client(middleware)
+  @doc """
+  Perform a signed get request to the specified path. Due to some of the implementation details the path string must begin with `/v2` in order to correctly call the API.
+  """
+  @spec get(path :: String.t()) :: map()
+  def get(path) do
+    Client.get(path)
   end
   
-  def current_user do
-    {:ok, data} =
-      client("/v2/user", "GET")
-      |> Tesla.get("/v2/user")
+  @doc """
+  Perform a signed post request to the specified path. Due to some of the implementation details the path string must begin with `/v2` in order to correctly call the API.
 
-    data
+  The request body can be in the form of a map for your convienience, for example:
+
+
+  ```
+  Coinbase.post("/v2/accounts/<account_id>/sells", %{total: 10, currency: "USD"})
+  ```
+
+  Is equivalent to:
+
+  ```
+  Coinbase.post("/v2/accounts/<account_id>/sells", ~S({"total": "10", "currency": "USD"}))
+  ```
+  """
+  @spec post(path :: String.t(), body :: map()) :: map()
+  def post(path, body) do
+    Client.post(path, body)
   end
 
-  def accounts do
-    {:ok, resp} =
-      client("/v2/accounts", "GET")
-      |> Tesla.get("/v2/accounts")
 
-    resp.body["data"]
+  @doc """
+  Perform a signed put request to the specified path. Due to some of the implementation details the path string must begin with `/v2` in order to correctly call the API.
+
+  The request body can be in the form of a map for your convienience, for example:
+
+  ```
+  Coinbase.put("/v2/some/resource", %{total: 10, currency: "USD"})
+  ```
+
+  Is equivalent to:
+
+  ```
+  Coinbase.put("/v2/some/resource", ~S({"total": "10", "currency": "USD"}))
+  ```
+  """
+  @spec put(path :: String.t(), body :: map()) :: map()
+  def put(path, body) do
+    Client.put(path, body)
   end
 
-  def account_by_symbol(symbol) do
-    accounts()
-    |> Enum.filter(fn account ->
-      account["currency"]["code"] == symbol
-    end)
+  @doc """
+  Perform a signed put request to the specified path. Due to some of the implementation details the path string must begin with `/v2` in order to correctly call the API.
+
+  The request body can be in the form of a map for your convienience, for example:
+
+  ```
+  Coinbase.patch("/v2/some/resource", %{total: 10, currency: "USD"})
+  ```
+
+  Is equivalent to:
+
+  ```
+  Coinbase.patch("/v2/some/resource", ~S({"total": "10", "currency": "USD"}))
+  ```
+  """
+  @spec patch(path :: String.t(), body :: map()) :: map()
+  def patch(path, body) do
+    Client.patch(path, body)
   end
 
-  def account_id(account) do
-    account["id"]
-  end
-
-  def resource_path(account) do
-    account["resource_path"]
+  @doc """
+  Perform a signed delete request to the specified path. Due to some of the implementation details the path string must begin with `/v2` in order to correctly call the API.
+  """
+  @spec delete(path :: String.t()) :: map()
+  def delete(path) do
+    Client.delete(path)
   end
 
 end
