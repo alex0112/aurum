@@ -18,7 +18,7 @@ defmodule Aurum.Coinbase.Fetchers do
   def fetch_key do
     case System.fetch_env(@key_name) do
       {:ok, key} -> key
-      :error -> Logger.warn("Coinbase key not found. Have you run `export COINBASE_KEY=... in your local environment?")
+      :error -> Logger.warn("Coinbase key not found. Have you run `export COINBASE_KEY=... in your locl environment?")
     end
   end
 
@@ -50,6 +50,13 @@ defmodule Aurum.Coinbase.Fetchers do
 
   ### Just parse the pure epoch timestamp out of the response. We don't
   #   care about the human readable portion.
-  defp parse_epoch({:ok, %Tesla.Env{body: %{"data" => %{"epoch" => epoch}}}}), do: epoch
+  defp parse_epoch(resp) do
+    case resp do
+      {:ok, %Tesla.Env{body: %{"data" => %{"epoch" => epoch}}}}
+	-> epoch
+      {:error, msg}
+	-> msg
+    end
+  end
 
 end
