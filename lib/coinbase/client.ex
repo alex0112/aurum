@@ -59,19 +59,22 @@ defmodule Aurum.Coinbase.Client do
     |> unwrap_response()
   end
 
-  def post(path, body) do
+  def post(path, body) when is_map(body), do: post(path, Poison.encode!(body))
+  def post(path, body) when is_binary(body) do
     new("POST", path, body)
     |> Tesla.post(path, body)
     |> unwrap_response()
   end
 
-  def put(path, body) do
+  def put(path, body) when is_map(body), do: post(path, Poison.encode!(body))
+  def put(path, body) when is_binary(body) do
     new("PUT", path, body)
     |> Tesla.put(path, body)
     |> unwrap_response()
   end
 
-  def patch(path, body) do
+  def patch(path, body) when is_map(body), do: post(path, Poison.encode!(body))
+  def patch(path, body) when is_binary(body) do
     new("PATCH", path, body)
     |> Tesla.patch(path, body)
     |> unwrap_response()
