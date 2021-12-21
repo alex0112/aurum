@@ -1,7 +1,6 @@
 defmodule Aurum.Coinbase.Sign do
   @moduledoc """
-  This module is responsible for all the signing related to the HMAC authentication which must be present on every request
-  to the Coinbase API.
+  This module is responsible for all the signing related to the HMAC authentication which must be present on every request to the Coinbase API.
   """
 
   alias Aurum.Coinbase.Fetchers, as: Fetchers

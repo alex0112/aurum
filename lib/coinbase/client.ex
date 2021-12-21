@@ -39,9 +39,9 @@ defmodule Aurum.Coinbase.Client do
   def unwrap_response(resp) do
     case resp do
       {:ok, resp}
-	-> {:ok, resp.body}
+	-> resp.body
       {:error, message}
-	-> {:error, message}
+	-> message
       err
 	-> {:error, err}
     end

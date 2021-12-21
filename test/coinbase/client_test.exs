@@ -73,4 +73,19 @@ end
     end
   end
 
+  describe "get/1" do
+  end
+
+  describe "delete/1" do
+  end
+
+  describe "post/2" do
+  end
+
+  describe "put/2" do
+  end
+
+  describe "patch/2" do
+  end
+
 end
