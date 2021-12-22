@@ -7,8 +7,7 @@ defmodule Aurum do
 
   ## Installation
 
-  If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-  by adding `aurum` to your list of dependencies in `mix.exs`:
+  Add `aurum` to your list of dependencies in `mix.exs`:
 
   ```elixir
   def deps do
@@ -158,13 +157,16 @@ defmodule Aurum do
   Thanks for using this library! Pull requests and contributions are always welcome. Until this library is published as `>= 1.0.0` it should be considered public beta. You are welcome to use it in any of your projects, but until it is fully published please do not consider the API stable.
 
   It is my sincerest wish as the creator and maintainer of this repo to produce software that is as high quality as possible. That being said, this is a project I maintain in my free time and since there is potential to mis-use this library in ways that may cost you real money, I feel the need to re-iterate this portion of the license:
+  
+  > EXCEPT WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER PARTIES
+  > PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR
+  > IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY  
+  > AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO THE QUALITY AND
+  > PERFORMANCE OF THE PROGRAM IS WITH YOU.  SHOULD THE PROGRAM PROVE DEFECTIVE, YOU 
+  > ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
 
-  ```
-  EXCEPT WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER PARTIES PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU.  SHOULD THE PROGRAM PROVE DEFECTIVE, YOU ASSUME THE COST OF
-  ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
-  ```
 
-  I am not responsible for any financial loss you incur while using this library to trade cryptocurrency, but may the odds be ever in your favor.
+  I am not responsible for any financial loss you incur while using this library to trade cryptocurrency. But may the odds be ever in your favor.
 
   ## Documentation:
   Docs can be found at [https://hexdocs.pm/aurum](https://hexdocs.pm/aurum).
