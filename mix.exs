@@ -26,10 +26,11 @@ defmodule Aurum.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-    {:tesla, "~> 1.4"},
-    {:hackney, "~> 1.17"},
-    {:jason, ">= 1.0.0"},
-    {:poison, "~> 5.0"},
+      {:tesla, "~> 1.4"},
+      {:hackney, "~> 1.17"},
+      {:jason, ">= 1.0.0"},
+      {:poison, "~> 5.0"},
+      {:ex_doc, "~> 0.24"},
     ]
   end
 end
