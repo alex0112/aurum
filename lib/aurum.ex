@@ -168,7 +168,5 @@ defmodule Aurum do
 
   ## Documentation:
   Docs can be found at [https://hexdocs.pm/aurum](https://hexdocs.pm/aurum).
-  
-
   """
 end
