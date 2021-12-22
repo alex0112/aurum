@@ -4,10 +4,15 @@ defmodule Aurum.MixProject do
   def project do
     [
       app: :aurum,
-      version: "0.1.0",
+      version: "0.2.0",
       elixir: "~> 1.12",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      licenses: ["GPLv3"],
+      links: %{github: "https://github.com/alex0112/aurum"},
+      description: """
+      An Elixir Client for the Coinbase API (V2)
+      """
     ]
   end
 
